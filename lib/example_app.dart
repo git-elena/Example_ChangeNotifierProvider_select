@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_with_select/my_app_model.dart';
 import 'package:provider_with_select/post/post_item.dart';
+import 'package:provider_with_select/screen/second_screen.dart';
 
 class ExampleApp extends StatelessWidget {
   const ExampleApp({Key? key}) : super(key: key);
@@ -9,10 +10,26 @@ class ExampleApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>  ChangeNotifierProvider(
       create: (_) => MyData(),
-      child: const _View(),
+      child: MaterialApp(
+        // home: _View(),
+        routes: {
+          '/first' : (context) => const _View(),
+          '/second': (context) => const SecondScreen(),
+        },
+        initialRoute: '/first',
+      )
     );
-
 }
+
+/*
+routes: {
+        '/main': (context) => const MainForm(),
+        '/main/list': (context) => const ListForm(),
+        '/main/post': (context) => const PostForm(),
+        '/main/categories': (context) => const CategoriesForm(),
+      },
+      initialRoute: '/main',
+* */
 
 class _View extends StatelessWidget {
   const _View({Key? key}) : super(key: key);
@@ -50,6 +67,11 @@ class _View extends StatelessWidget {
             const _ViewOne(),
             const _ViewTwo(),
             const _Row(),
+
+            ElevatedButton(
+              onPressed: () => Navigator.of(context).pushNamed('/second'),
+              child: const Text('Open\nScreen', textAlign: TextAlign.center,),
+            ),
           ],
         )),
       )
